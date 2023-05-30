@@ -3,6 +3,7 @@ package com.example.ubb.QuizWebsiteBackend.service.impl;
 import com.example.ubb.QuizWebsiteBackend.domain.Question;
 import com.example.ubb.QuizWebsiteBackend.dto.AnswerDto;
 import com.example.ubb.QuizWebsiteBackend.dto.QuestionDto;
+import com.example.ubb.QuizWebsiteBackend.exception.NoSuchIdException;
 import com.example.ubb.QuizWebsiteBackend.repository.QuestionRepository;
 import com.example.ubb.QuizWebsiteBackend.service.AnswerService;
 import com.example.ubb.QuizWebsiteBackend.service.QuestionService;
@@ -30,6 +31,15 @@ public class QuestionServiceImpl implements QuestionService {
         return questions.stream()
                 .map(this::buildQuestionDto)
                 .toList();
+    }
+
+    @Override
+    public void deleteQuestionById(Long questionId) throws NoSuchIdException {
+        if(!questionRepository.existsQuestionById(questionId)){
+            throw new NoSuchIdException("There is no question with the given id!");
+        }
+
+        questionRepository.deleteById(questionId);
     }
 
     private QuestionDto buildQuestionDto(Question question)
