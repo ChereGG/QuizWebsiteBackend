@@ -1,9 +1,6 @@
 package com.example.ubb.QuizWebsiteBackend.exception.advice;
 
-import com.example.ubb.QuizWebsiteBackend.exception.DuplicateUsernameException;
-import com.example.ubb.QuizWebsiteBackend.exception.NoSuchIdException;
-import com.example.ubb.QuizWebsiteBackend.exception.NoSuchUsernameException;
-import com.example.ubb.QuizWebsiteBackend.exception.WrongCredentialsException;
+import com.example.ubb.QuizWebsiteBackend.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -32,6 +29,12 @@ public class QuizAppExceptionHandler {
 
     @ExceptionHandler(NoSuchIdException.class)
     public ResponseEntity<?> handleException(NoSuchIdException exception) {
+
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(NoSuchQuizException.class)
+    public ResponseEntity<?> handleException(NoSuchQuizException exception) {
 
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }

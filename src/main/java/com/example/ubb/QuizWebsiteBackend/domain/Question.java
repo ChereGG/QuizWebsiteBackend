@@ -12,7 +12,7 @@ public class Question {
     private Long id;
 
     @Column(name = "quiz_id")
-    private Long quiz_id;
+    private Long quizId;
 
     @Column(name = "statement")
     private String statement;
@@ -25,12 +25,12 @@ public class Question {
         this.id = id;
     }
 
-    public Long getQuiz_id() {
-        return quiz_id;
+    public Long getQuizId() {
+        return quizId;
     }
 
-    public void setQuiz_id(Long quiz_id) {
-        this.quiz_id = quiz_id;
+    public void setQuizId(Long quizId) {
+        this.quizId = quizId;
     }
 
     public String getStatement() {
