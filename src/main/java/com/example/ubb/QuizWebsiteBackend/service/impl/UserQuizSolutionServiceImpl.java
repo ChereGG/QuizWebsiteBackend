@@ -31,10 +31,11 @@ public class UserQuizSolutionServiceImpl implements UserQuizSolutionService {
         userQuizSolutionRepository.save(userQuizSolution);
     }
 
-    @Override
-    public List<UserQuizSolutionDto> getAllUserSolutions(Long userId) {
 
-        List<UserQuizSolution> userQuizSolutions = userQuizSolutionRepository.findUserQuizSolutionByUserId(userId);
+    @Override
+    public List<UserQuizSolutionDto> getAllUserSolutionsByUserAndQuiz(Long userId, Long quizId) {
+
+        List<UserQuizSolution> userQuizSolutions = userQuizSolutionRepository.findAllByUserIdAndQuizId(userId, quizId);
 
         return userQuizSolutions.stream()
                 .map(this::buildUserQuizSolutionDto)

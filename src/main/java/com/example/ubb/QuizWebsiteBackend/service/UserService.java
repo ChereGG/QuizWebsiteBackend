@@ -6,13 +6,17 @@ import com.example.ubb.QuizWebsiteBackend.exception.NoSuchIdException;
 import com.example.ubb.QuizWebsiteBackend.exception.NoSuchUsernameException;
 import com.example.ubb.QuizWebsiteBackend.exception.WrongCredentialsException;
 
+import java.util.List;
+
 
 public interface UserService {
 
-     void signUp(UserDto userDto) throws DuplicateUsernameException;
+     UserDto signUp(UserDto userDto) throws DuplicateUsernameException;
 
      UserDto logIn(UserDto userDto) throws NoSuchUsernameException, WrongCredentialsException;
 
      void grantAdmin(Long userId) throws NoSuchIdException;
+
+     List<UserDto> getNonAdminUsers();
 
 }

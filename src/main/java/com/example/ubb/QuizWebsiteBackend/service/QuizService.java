@@ -13,4 +13,6 @@ public interface QuizService {
     List<QuizWithQuestionsAndAnswersDto> getAllQuizzes();
 
     void modifyExistentQuiz(QuizDto quizDto) throws NoSuchQuizException;
+
+    QuizWithQuestionsAndAnswersDto getQuizById(Long quizId) throws NoSuchQuizException;
 }

@@ -9,7 +9,7 @@ public class QuestionDto {
     @JsonProperty(value = "id")
     private Long id;
 
-    @JsonProperty(value = "quiId")
+    @JsonProperty(value = "quizId")
     private Long quizId;
 
     @JsonProperty(value = "statement")

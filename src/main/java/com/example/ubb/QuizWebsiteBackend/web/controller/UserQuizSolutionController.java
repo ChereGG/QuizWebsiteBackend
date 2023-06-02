@@ -27,8 +27,8 @@ public class UserQuizSolutionController {
         userQuizSolutionService.addUserQuizSolution(userQuizSolutionDto);
     }
 
-    @GetMapping(value = "/{userId}")
-    ResponseEntity<?> getAllUserSolutions(@PathVariable Long userId){
-        return new ResponseEntity<>(userQuizSolutionService.getAllUserSolutions(userId), HttpStatus.OK);
+    @GetMapping(value = "user/{userId}/quiz/{quizId}")
+    ResponseEntity<?> getAllUserSolutions(@PathVariable Long userId, @PathVariable Long quizId){
+        return new ResponseEntity<>(userQuizSolutionService.getAllUserSolutionsByUserAndQuiz(userId, quizId), HttpStatus.OK);
     }
 }

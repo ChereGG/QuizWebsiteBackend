@@ -36,4 +36,11 @@ public class QuizController {
 
         quizService.modifyExistentQuiz(quizDto);
     }
+
+    @GetMapping(value = "/{quizId}")
+    public ResponseEntity<QuizWithQuestionsAndAnswersDto> getQuizById(@PathVariable Long quizId) throws NoSuchQuizException {
+
+        return  new ResponseEntity<>(quizService.getQuizById(quizId), HttpStatus.OK);
+    }
+
 }

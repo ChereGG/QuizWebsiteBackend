@@ -8,5 +8,5 @@ public interface UserQuizSolutionService {
 
     void addUserQuizSolution(UserQuizSolutionDto userQuizSolutionDto);
 
-    List<UserQuizSolutionDto> getAllUserSolutions(Long userId);
+    List<UserQuizSolutionDto> getAllUserSolutionsByUserAndQuiz(Long userId, Long quizId);
 }

@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.example.ubb.QuizWebsiteBackend.web.mapping.ControllerMappings.USER;
 
 @RequestMapping(USER)
@@ -26,9 +28,9 @@ public class UserController {
     }
 
     @PostMapping
-    public void signUpUser(@RequestBody UserDto userDto) throws DuplicateUsernameException {
+    public ResponseEntity<UserDto> signUpUser(@RequestBody UserDto userDto) throws DuplicateUsernameException {
 
-        userService.signUp(userDto);
+        return new ResponseEntity<>(userService.signUp(userDto), HttpStatus.OK);
     }
 
     @GetMapping(value = "/login")
@@ -41,5 +43,11 @@ public class UserController {
     public void grantAdmin(@PathVariable Long id) throws NoSuchIdException {
 
         userService.grantAdmin(id);
+    }
+
+    @GetMapping(value = "/non-admin")
+    public ResponseEntity<List<UserDto>> getNonAdminUsers()  {
+
+        return new ResponseEntity<>(userService.getNonAdminUsers(), HttpStatus.OK);
     }
 }

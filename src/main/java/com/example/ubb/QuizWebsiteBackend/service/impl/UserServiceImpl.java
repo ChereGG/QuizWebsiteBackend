@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -27,7 +29,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void signUp(UserDto userDto) throws DuplicateUsernameException {
+    public UserDto signUp(UserDto userDto) throws DuplicateUsernameException {
         if(userRepository.existsByUsername(userDto.getUsername())){
             throw new DuplicateUsernameException("The username already exists.");
         }
@@ -39,6 +41,8 @@ public class UserServiceImpl implements UserService {
         user.setAdmin(false);
 
         userRepository.save(user);
+
+        return this.buildUserDto(user);
     }
 
     @Override
@@ -54,6 +58,9 @@ public class UserServiceImpl implements UserService {
 
         if(userDto.getMaxNumberOfChapters() != null) {
             quizService.populateByNumber(userDto.getMaxNumberOfChapters());
+        }
+        else{
+            quizService.populateByNumber(5);
         }
 
         UserDto result = new UserDto();
@@ -71,5 +78,25 @@ public class UserServiceImpl implements UserService {
 
         dbUser.setAdmin(true);
         userRepository.save(dbUser);
+    }
+
+    @Override
+    public List<UserDto> getNonAdminUsers() {
+        List<User> nonAdminUsers = userRepository.findAllByIsAdminFalse();
+
+        return nonAdminUsers.stream()
+                .map(this::buildUserDto)
+                .toList();
+
+    }
+
+    private UserDto buildUserDto(User user){
+        UserDto userDto = new UserDto();
+
+        userDto.setUsername(user.getUsername());
+        userDto.setIsAdmin(user.getAdmin());
+        userDto.setId(user.getId());
+
+        return userDto;
     }
 }

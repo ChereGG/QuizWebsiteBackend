@@ -10,4 +10,6 @@ public interface QuestionService {
     List<QuestionDto> getAllQuestionsForQuiz(Long quizId);
 
     void deleteQuestionById(Long questionId) throws NoSuchIdException;
+
+    QuestionDto addQuestion(QuestionDto questionDto);
 }

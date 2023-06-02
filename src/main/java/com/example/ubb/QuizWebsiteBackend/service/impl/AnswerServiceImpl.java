@@ -27,6 +27,11 @@ public class AnswerServiceImpl implements AnswerService {
                 .toList();
     }
 
+    @Override
+    public void saveAnswer(Answer answer) {
+         answerRepository.save(answer);
+    }
+
     private AnswerDto buildAnswerDto(Answer answer){
         AnswerDto answerDto = new AnswerDto();
 

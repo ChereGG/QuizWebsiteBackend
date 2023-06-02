@@ -64,6 +64,15 @@ public class QuizServiceImpl implements QuizService {
 
     }
 
+    @Override
+    public QuizWithQuestionsAndAnswersDto getQuizById(Long quizId) throws NoSuchQuizException {
+        Quiz dbQuiz = quizRepository.findById(quizId).orElseThrow(() -> new NoSuchQuizException("There is no quiz with the given id"));
+
+        return this.buildQuizWithQuestionAndAnswersDto(dbQuiz);
+    }
+
+
+
     private QuizWithQuestionsAndAnswersDto buildQuizWithQuestionAndAnswersDto(Quiz quiz){
 
         QuizWithQuestionsAndAnswersDto quizDto = new QuizWithQuestionsAndAnswersDto();

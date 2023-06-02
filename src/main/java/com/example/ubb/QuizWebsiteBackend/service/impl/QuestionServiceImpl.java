@@ -1,5 +1,6 @@
 package com.example.ubb.QuizWebsiteBackend.service.impl;
 
+import com.example.ubb.QuizWebsiteBackend.domain.Answer;
 import com.example.ubb.QuizWebsiteBackend.domain.Question;
 import com.example.ubb.QuizWebsiteBackend.dto.AnswerDto;
 import com.example.ubb.QuizWebsiteBackend.dto.QuestionDto;
@@ -11,12 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
 
     private final QuestionRepository questionRepository;
     private final AnswerService answerService;
+
 
     @Autowired
     public QuestionServiceImpl(QuestionRepository questionRepository, AnswerService answerService) {
@@ -40,6 +43,32 @@ public class QuestionServiceImpl implements QuestionService {
         }
 
         questionRepository.deleteById(questionId);
+    }
+
+    @Override
+    public QuestionDto addQuestion(QuestionDto questionDto) {
+        Question question = new Question();
+
+        question.setStatement(questionDto.getStatement());
+        question.setQuizId(questionDto.getQuizId());
+
+        question = questionRepository.save(question);
+
+        Long id = question.getId();
+        AtomicReference<Integer> atomicInteger = new AtomicReference<>(0);
+        questionDto.getAnswers().forEach(answerDto -> {
+            Answer answer = new Answer();
+            answer.setQuestionId(id);
+            answer.setStatement(answerDto.getStatement());
+            answer.setCorrect(answerDto.getIsCorrect());
+            atomicInteger.set(atomicInteger.get() + 1);
+            answer.setDisplayOrder(atomicInteger.get());
+
+            answerService.saveAnswer(answer);
+        });
+
+        return buildQuestionDto(question);
+
     }
 
     private QuestionDto buildQuestionDto(Question question)
