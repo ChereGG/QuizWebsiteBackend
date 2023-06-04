@@ -33,7 +33,7 @@ public class UserController {
         return new ResponseEntity<>(userService.signUp(userDto), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/login")
+    @PostMapping(value = "/login")
     public ResponseEntity<UserDto> logIn(@RequestBody UserDto userDto) throws NoSuchUsernameException, WrongCredentialsException {
 
         return new ResponseEntity<>(userService.logIn(userDto), HttpStatus.OK);

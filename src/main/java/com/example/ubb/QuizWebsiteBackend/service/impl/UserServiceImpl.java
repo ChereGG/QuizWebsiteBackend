@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
             quizService.populateByNumber(userDto.getMaxNumberOfChapters());
         }
         else{
-            quizService.populateByNumber(5);
+            quizService.populateByNumber(6);
         }
 
         UserDto result = new UserDto();
